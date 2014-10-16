@@ -25,3 +25,5 @@ Open `app/config/auth.php` and change the authentication driver to `ldap`.
 Run `php artisan config:publish diegognt/ldap-auth-driver` and adjust the config file for your LDAP settings.
 
 It can be found in `app/config/packages/diegognt/ldap-auth-driver`.
+
+Thanks to yuri-moens[https://github.com/yuri-moens]
