@@ -15,7 +15,7 @@ use Illuminate\Database\Connection;
  *
  */
 
-class L4OpenLdapUserProvider implements UserProviderInterface
+class LdapAuthDriverUserProvider implements UserProviderInterface
 {
     /**
      * The Eloquent user model.

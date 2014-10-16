@@ -31,7 +31,7 @@ class LdapAuthDriverServiceProvider extends ServiceProvider
 
         $this->app['auth']->extend('ldap', function ($app) {
             return new Guard(
-                new LdapAuthDriverServiceProvider($app['db']->connection()),
+                new LdapAuthDriverUserProvider($app['db']->connection()),
                 $app->make('session.store')
             );
         });
