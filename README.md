@@ -1,4 +1,4 @@
-# l4-openldap
+# l4 OpenLDAP Auth Driver
 
 An OpenLDAP authentication driver for Laravel 4.
 
@@ -26,4 +26,4 @@ Run `php artisan config:publish diegognt/ldap-auth-driver` and adjust the config
 
 It can be found in `app/config/packages/diegognt/ldap-auth-driver`.
 
-Thanks to yuri-moens[https://github.com/yuri-moens]
+Thanks to [yuri-moens](https://github.com/yuri-moens)
