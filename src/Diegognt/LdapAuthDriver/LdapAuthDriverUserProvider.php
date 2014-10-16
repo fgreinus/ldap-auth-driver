@@ -149,13 +149,23 @@ class LdapAuthDriverUserProvider implements UserProviderInterface
      */
     public function retrieveByCredentials(array $credentials)
     {
-        $result = @ldap_search($this->conn, Config::get('ldap-auth-driver::login_attribute') . '=' . $credentials['username'] . ',' . Config::get('ldap-auth-driver::basedn'), Config::get('ldap-auth-driver::filter'));
+        $result = @ldap_search(
+            $this->conn,
+            Config::get('ldap-auth-driver::basedn'),
+            "(".Config::get('ldap-auth-driver::login_attribute')."=".$credentials['username'].")",
+            array(), 0, 0, 0, LDAP_DEREF_ALWAYS
+        );
         if ($result == false) {
             return;
         }
 
         $entries = ldap_get_entries($this->conn, $result);
+
         if ($entries['count'] == 0 || $entries['count'] > 1) {
+            return;
+        }
+
+        if (!$bind = ldap_bind($this->conn, $entries[0]['dn'],$credentials['password'])) {
             return;
         }
 
