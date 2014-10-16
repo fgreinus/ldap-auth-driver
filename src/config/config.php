@@ -12,8 +12,6 @@ return array(
     'password' => 'thisisasecret', // optional
     'version'  => '3',   // LDAP protocol version (2 or 3)
 
-    'filter' => '(&(objectclass=posixAccount)(|(status=member)))', // optional
-
     'login_attribute' => 'uid', // login attributes for users
     'basedn' => 'ou=people,dc=example,dc=com', // basedn for users
     'user_id_attribute' => 'uidNumber', // the attribute name containg the uid number
