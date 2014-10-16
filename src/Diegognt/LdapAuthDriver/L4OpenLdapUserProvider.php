@@ -1,6 +1,5 @@
 <?php
-
-namespace Ymo\L4OpenLdap;
+namespace Diegognt\LdapAuthDriver;
 
 use Config;
 use Exception;
@@ -41,8 +40,8 @@ class L4OpenLdapUserProvider implements UserProviderInterface
 
     /**
      * Create a new LDAP user provider.
-     * 
-     * @param 
+     *
+     * @param
      */
     public function __construct(Connection $db_conn)
     {
@@ -82,7 +81,7 @@ class L4OpenLdapUserProvider implements UserProviderInterface
 
     /**
      * Retrieve a user by their unique identifier.
-     * 
+     *
      * @param  mixed $identifier
      * @return \Illuminate\Auth\UserInterface|null
      */
@@ -101,12 +100,12 @@ class L4OpenLdapUserProvider implements UserProviderInterface
             } else {
                 return $this->createGenericUserFromLdap($entries[0]);
             }
-        }        
+        }
     }
 
     /**
      * Retrieve a user by their unique identifier and "remember me" token.
-     * 
+     *
      * @param  mixed $identifier
      * @param  string $token
      * @return \Illuminate\Auth\UserInterface|null
@@ -123,12 +122,12 @@ class L4OpenLdapUserProvider implements UserProviderInterface
                     ->where('id', $user->id)
                     ->where($model->getRememberTokenName(), $token)
                     ->first();
-        } 
+        }
     }
 
     /**
      * Update the "remember me" token for the given user in storage.
-     * 
+     *
      * @param  \Illuminate\Auth\UserInterface $user
      * @param  string $token
      * @return void
@@ -144,7 +143,7 @@ class L4OpenLdapUserProvider implements UserProviderInterface
 
     /**
      * Retrieve a user by the given credentials.
-     * 
+     *
      * @param  array  $credentials
      * @return \Illuminate\Auth\UserInterface|null
      */
@@ -167,7 +166,7 @@ class L4OpenLdapUserProvider implements UserProviderInterface
 
     /**
      * Validate a user against the given credentials.
-     * 
+     *
      * @param  \Illuminate\Auth\UserInterface  $user
      * @param  array
      * @return boolean
@@ -190,7 +189,7 @@ class L4OpenLdapUserProvider implements UserProviderInterface
 
     /**
      * Search the LDAP server for entries that match the specified identifier.
-     * 
+     *
      * @param  mixed $identifier
      * @return array|null
      */
@@ -219,7 +218,7 @@ class L4OpenLdapUserProvider implements UserProviderInterface
 
     /**
      * Create a GenericUser from the specified LDAP entry.
-     * 
+     *
      * @param  array $entry
      * @return \Illuminate\Auth\GenericUser
      */
@@ -238,7 +237,7 @@ class L4OpenLdapUserProvider implements UserProviderInterface
 
     /**
      * Create a new model instance.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     private function createModel()

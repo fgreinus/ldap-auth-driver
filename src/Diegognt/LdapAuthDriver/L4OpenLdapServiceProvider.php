@@ -1,6 +1,5 @@
 <?php
-
-namespace Ymo\L4OpenLdap;
+namespace Diegognt\LdapAuthDriver;
 
 use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
@@ -23,7 +22,7 @@ class L4OpenLdapServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application events.
-     * 
+     *
      * @return void
      */
     public function boot()
@@ -40,7 +39,7 @@ class L4OpenLdapServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     * 
+     *
      * @return void
      */
     public function register()
@@ -50,7 +49,7 @@ class L4OpenLdapServiceProvider extends ServiceProvider
 
     /**
      * Get the services provided by the provider.
-     * 
+     *
      * @return array
      */
     public function provides()
