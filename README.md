@@ -16,7 +16,7 @@ Run `composer update`.
 
 Open `app/config/app.php` and add:
 
-`Diegognt\LdapAuthDriver\L4OpenLdapServiceProvider`
+`Diegognt\LdapAuthDriver\LdapAuthDriverServiceProvider`
 
 Open `app/config/auth.php` and change the authentication driver to `ldap`.
 

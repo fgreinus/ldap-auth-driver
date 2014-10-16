@@ -1,7 +1,7 @@
 <?php
 
 /**
- * LDAP configuration for ymo/l4-openldap
+ * LDAP configuration diegognt/ldap-auth-driver
  */
 
 return array(

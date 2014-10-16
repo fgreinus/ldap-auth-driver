@@ -7,11 +7,11 @@ use Illuminate\Support\ServiceProvider;
 /**
  * An OpenLDAP authentication driver for Laravel 4.
  *
- * @author Yuri Moens (yuri.moens@gmail.com)
+ * @author Diego Navarro (diego.nava07@gmail.com)
  *
  */
 
-class L4OpenLdapServiceProvider extends ServiceProvider
+class LdapAuthDriverServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -27,11 +27,11 @@ class L4OpenLdapServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('ymo/l4-openldap');
+        $this->package('diegognt/ldap-auth-driver');
 
         $this->app['auth']->extend('ldap', function ($app) {
             return new Guard(
-                new L4OpenLdapUserProvider($app['db']->connection()),
+                new LdapAuthDriverServiceProvider($app['db']->connection()),
                 $app->make('session.store')
             );
         });

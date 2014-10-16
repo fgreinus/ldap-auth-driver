@@ -11,7 +11,7 @@ use Illuminate\Database\Connection;
 /**
  * An OpenLDAP authentication driver for Laravel 4.
  *
- * @author Yuri Moens (yuri.moens@gmail.com)
+ * @author Diego Navarro (diego.nava07@gmail.com)
  *
  */
 
@@ -51,15 +51,15 @@ class L4OpenLdapUserProvider implements UserProviderInterface
             throw new Exception("PHP LDAP extension not loaded.");
         }
 
-        if (! $this->conn = ldap_connect("ldap://" . Config::get('l4-openldap::host'))) {
-            throw new Exception("Could not connect to LDAP host " . Config::get('l4-openldap::host') . ": " . ldap_error($this->conn));
+        if (! $this->conn = ldap_connect("ldap://" . Config::get('ldap-auth-driver::host'))) {
+            throw new Exception("Could not connect to LDAP host " . Config::get('ldap-auth-driver::host') . ": " . ldap_error($this->conn));
         }
 
-        ldap_set_option($this->conn, LDAP_OPT_PROTOCOL_VERSION, Config::get('l4-openldap::version'));
+        ldap_set_option($this->conn, LDAP_OPT_PROTOCOL_VERSION, Config::get('ldap-auth-driver::version'));
         ldap_set_option($this->conn, LDAP_OPT_REFERRALS, 0);
 
-        if (Config::get('l4-openldap::username') && Config::get('l4-openldap::password') && Config::get('l4-openldap::rdn')) {
-            if (!@ldap_bind($this->conn, 'cn=' . Config::get('l4-openldap::username') . ',' . Config::get('l4-openldap::rdn'), Config::get('l4-openldap::password'))) {
+        if (Config::get('ldap-auth-driver::username') && Config::get('ldap-auth-driver::password') && Config::get('ldap-auth-driver::rdn')) {
+            if (!@ldap_bind($this->conn, 'cn=' . Config::get('ldap-auth-driver::username') . ',' . Config::get('ldap-auth-driver::rdn'), Config::get('ldap-auth-driver::password'))) {
                 throw new Exception('Could not bind to AD: ' . ldap_error($this->conn));
             }
         } else {
@@ -88,11 +88,11 @@ class L4OpenLdapUserProvider implements UserProviderInterface
     public function retrieveById($identifier)
     {
         if ($entries = $this->searchLdap($identifier)) {
-            if (Config::get('l4-openldap::use_db')) {
-                $ldap_value = $entries[0][Config::get('l4-openldap::ldap_field')][0];
-                $user = $this->db_conn->table(Config::get('l4-openldap::db_table'))->where(Config::get('l4-openldap::db_field'), '=', $ldap_value)->first();
+            if (Config::get('ldap-auth-driver::use_db')) {
+                $ldap_value = $entries[0][Config::get('ldap-auth-driver::ldap_field')][0];
+                $user = $this->db_conn->table(Config::get('ldap-auth-driver::db_table'))->where(Config::get('ldap-auth-driver::db_field'), '=', $ldap_value)->first();
 
-                if (Config::get('l4-openldap::eloquent')) {
+                if (Config::get('ldap-auth-driver::eloquent')) {
                     return $this->createModel()->newQuery()->find($user->id);
                 } else {
                     return new GenericUser(get_object_vars($user));
@@ -113,8 +113,8 @@ class L4OpenLdapUserProvider implements UserProviderInterface
     public function retrieveByToken($identifier, $token)
     {
         if ($entries = $this->searchLdap($identifier)) {
-                $ldap_value = $entries[0][Config::get('l4-openldap::ldap_field')][0];
-                $user = $this->db_conn->table(Config::get('l4-openldap::db_table'))->where(Config::get('l4-openldap::db_field'), '=', $ldap_value)->first();
+                $ldap_value = $entries[0][Config::get('ldap-auth-driver::ldap_field')][0];
+                $user = $this->db_conn->table(Config::get('ldap-auth-driver::db_table'))->where(Config::get('ldap-auth-driver::db_field'), '=', $ldap_value)->first();
 
                 $model = $this->createModel();
 
@@ -149,7 +149,7 @@ class L4OpenLdapUserProvider implements UserProviderInterface
      */
     public function retrieveByCredentials(array $credentials)
     {
-        $result = @ldap_search($this->conn, Config::get('l4-openldap::login_attribute') . '=' . $credentials['username'] . ',' . Config::get('l4-openldap::basedn'), Config::get('l4-openldap::filter'));
+        $result = @ldap_search($this->conn, Config::get('ldap-auth-driver::login_attribute') . '=' . $credentials['username'] . ',' . Config::get('ldap-auth-driver::basedn'), Config::get('ldap-auth-driver::filter'));
         if ($result == false) {
             return;
         }
@@ -180,7 +180,7 @@ class L4OpenLdapUserProvider implements UserProviderInterface
             return false;
         }
 
-        if (!$result = @ldap_bind($this->conn, Config::get('l4-openldap::login_attribute') . '=' . $credentials['username'] . ',' . Config::get('l4-openldap::basedn'), $credentials['password'])) {
+        if (!$result = @ldap_bind($this->conn, Config::get('ldap-auth-driver::login_attribute') . '=' . $credentials['username'] . ',' . Config::get('ldap-auth-driver::basedn'), $credentials['password'])) {
             return false;
         }
 
@@ -195,14 +195,14 @@ class L4OpenLdapUserProvider implements UserProviderInterface
      */
     private function searchLdap($identifier)
     {
-        $filter = Config::get('l4-openldap::filter');
+        $filter = Config::get('ldap-auth-driver::filter');
         if (strpos($filter, '&')) {
-            $filter = substr_replace($filter, '(' . Config::get('l4-openldap::user_id_attribute') . '=' . $identifier . ')', strpos($filter, '&')+1, 0);
+            $filter = substr_replace($filter, '(' . Config::get('ldap-auth-driver::user_id_attribute') . '=' . $identifier . ')', strpos($filter, '&')+1, 0);
         } else {
-            $filter = '(&(' . Config::get('l4-openldap::user_id_attribute') . '=' . $identifier . ')' . $filter . ')';
+            $filter = '(&(' . Config::get('ldap-auth-driver::user_id_attribute') . '=' . $identifier . ')' . $filter . ')';
         }
 
-        $result = @ldap_search($this->conn, Config::get('l4-openldap::basedn'), $filter);
+        $result = @ldap_search($this->conn, Config::get('ldap-auth-driver::basedn'), $filter);
 
         if ($result == false) {
             return;
@@ -225,10 +225,10 @@ class L4OpenLdapUserProvider implements UserProviderInterface
     private function createGenericUserFromLdap($entry)
     {
         $parameters = array (
-            'id' => $entry[Config::get('l4-openldap::user_id_attribute')][0]
+            'id' => $entry[Config::get('ldap-auth-driver::user_id_attribute')][0]
         );
 
-        foreach (Config::get('l4-openldap::user_attributes') as $key => $value) {
+        foreach (Config::get('ldap-auth-driver::user_attributes') as $key => $value) {
             $parameters[$value] = $entry[$key][0];
         }
 
@@ -242,7 +242,7 @@ class L4OpenLdapUserProvider implements UserProviderInterface
      */
     private function createModel()
     {
-        $class = '\\' . ltrim(Config::get('l4-openldap::eloquent_user_model'), '\\');
+        $class = '\\' . ltrim(Config::get('ldap-auth-driver::eloquent_user_model'), '\\');
 
         return new $class;
     }
