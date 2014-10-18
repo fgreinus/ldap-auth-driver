@@ -1,7 +1,7 @@
 <?php
 
 /**
- * LDAP configuration diegognt/ldap-auth-driver
+ * LDAP configuration fgreinus/ldap-auth-driver
  */
 
 return array(

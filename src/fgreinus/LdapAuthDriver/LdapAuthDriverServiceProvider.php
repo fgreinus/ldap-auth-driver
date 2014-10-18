@@ -1,5 +1,5 @@
 <?php
-namespace Diegognt\LdapAuthDriver;
+namespace fgreinus\LdapAuthDriver;
 
 use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 /**
  * An OpenLDAP authentication driver for Laravel 4.
  *
- * @author Diego Navarro (diego.nava07@gmail.com)
+ * @author Florian Greinus (florian.greinus@gmail.com)
  *
  */
 
@@ -27,7 +27,7 @@ class LdapAuthDriverServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('diegognt/ldap-auth-driver');
+        $this->package('fgreinus/ldap-auth-driver');
 
         $this->app['auth']->extend('ldap', function ($app) {
             return new Guard(

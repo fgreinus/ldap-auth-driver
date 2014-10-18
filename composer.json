@@ -1,13 +1,13 @@
 {
-  "name": "diegognt/ldap-auth-driver",
+  "name": "fgreinus/ldap-auth-driver",
   "type": "library",
   "description": "An OpenLDAP authentication driver for Laravel 4.x",
   "keywords": ["laravel", "L4", "OpenLDAP", "Authentication", "Laravel 4", "auth"],
-  "homepage": "https://github.com/diegognt/ldap-auth-driver",
+  "homepage": "https://github.com/fgreinus/ldap-auth-driver",
   "license": "WTFPL",
   "authors": [{
-    "name": "Diego Navarro",
-    "email": "diego.nava07@gmail.com"
+    "name": "Florian Greinus",
+    "email": "florian.greinus@gmail.com"
   }],
   "require": {
     "php": ">=5.4.0",
@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-0": {
-      "Diegognt\\LdapAuthDriver": "src/"
+      "fgreinus\\LdapAuthDriver": "src/"
     }
   },
   "minimum-stability": "dev"

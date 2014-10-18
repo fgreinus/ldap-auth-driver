@@ -8,7 +8,7 @@ Add the following to your `composer.json` file.
 
 ```
 require {
-	"diegognt/ldap-auth-driver": "dev-master"
+	"fgreinus/ldap-auth-driver": "dev-master"
 }
 ```
 
@@ -16,14 +16,14 @@ Run `composer update`.
 
 Open `app/config/app.php` and add:
 
-`Diegognt\LdapAuthDriver\LdapAuthDriverServiceProvider`
+`fgreinus\LdapAuthDriver\LdapAuthDriverServiceProvider`
 
 Open `app/config/auth.php` and change the authentication driver to `ldap`.
 
 ## Configuration
 
-Run `php artisan config:publish diegognt/ldap-auth-driver` and adjust the config file for your LDAP settings.
+Run `php artisan config:publish fgreinus/ldap-auth-driver` and adjust the config file for your LDAP settings.
 
-It can be found in `app/config/packages/diegognt/ldap-auth-driver`.
+It can be found in `app/config/packages/fgreinus/ldap-auth-driver`.
 
-Thanks to [yuri-moens](https://github.com/yuri-moens)
+Thanks to [yuri-moens](https://github.com/yuri-moens) and [Diego Navarro](https://github.com/diegognt)
