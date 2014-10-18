@@ -91,7 +91,9 @@ class LdapAuthDriverUserProvider implements UserProviderInterface
     public function retrieveById( $identifier )
     {
         if (Config::get( 'ldap-auth-driver::eloquent' ) == true) {
-            $identifier = \User::find( $identifier )->username;
+            if ($foundUser = \User::find( $identifier )) {
+                $identifier = $foundUser->username;
+            }
         }
 
         if ($entries = $this->searchLdap( $identifier )) {
@@ -124,7 +126,8 @@ class LdapAuthDriverUserProvider implements UserProviderInterface
     public function retrieveByToken( $identifier, $token )
     {
         if (Config::get( 'ldap-auth-driver::eloquent' ) == true) {
-            $identifier = \User::find( $identifier )->username;
+            if ($foundUser = \User::find($identifier))
+                $identifier = $foundUser->username;
         }
 
         if ($entries = $this->searchLdap( $identifier )) {
